@@ -1,0 +1,152 @@
+//1
+db.createCollection("books",{
+    validator:{
+        $jsonSchema: {
+            bsonType: "object",
+            required : ["title"],
+            properties:{
+                title:{
+                    minLength:1
+                }
+            }
+        }
+    }
+})
+
+
+//2
+db.authors.insertOne({
+    name :"yossef",
+    nation:"egyptien"
+})
+
+
+//3
+db.createCollection("log",{
+    capped:true ,size :10000
+})
+
+
+//4
+db.books.createIndex({title:1})
+
+//5
+db.books.insertOne({
+    title:"Book1",
+    author:"ahmed ali wensh",
+    year:1997,
+    geners:["horror","action"]
+})
+
+//6
+db.books.insertMany([{ title:"Book1",
+    author:"yossef ali wensh",
+    year:2000,
+    geners:["horror","action"]},{ title:"Book1",
+    author:"mahmoud ali wensh",
+    year:1999,
+    geners:["horror","action"]},{ title:"Book1",
+    author:"s3da ali wensh",
+    year:2005,
+    geners:["horror","action"]}])
+
+//7
+db.log.insertOne({
+    book_id:ObjectId('6aa98cd02c0e2cd5a95874b3'),
+    action:"borrwed"
+})
+
+//8
+db.books.updateOne(
+    {title:"Future"},{$set:{year:2044}}
+)
+
+//9
+db.books.findOne({
+    title:"BraveNewWorld"
+})
+
+
+//10
+db.books.find({
+    year:{
+        $gte:1990,
+        $lte:2010
+    }
+})
+
+
+//11
+db.books.find({
+    genre: "Science Fiction"
+})
+
+//12
+db.books.find().sort({year:-1}).skip(2).limit(3)
+
+
+//13
+db.books.find({
+    year:{
+        $type:"int"
+    }
+})
+
+//14
+db.books.find({
+     geners:{
+        $nin:["horror","Science Fiction"]
+    }
+})
+
+//15
+db.books.deleteMany({
+    year:{
+        $lt:2000
+    }
+})
+
+//16
+db.books.aggregate ([{
+    $match:{
+        year:{
+            $gt:2000
+        }
+    }
+}]).sort({year:-1})
+
+//17
+db.books.aggregate ([{
+    $match:{
+        year:{
+            $gt:2000
+        }
+    }
+},{
+    $project:{
+        _id:0,
+        geners:0
+    }
+}])
+
+//18
+db.books.aggregate ([{
+    $unwind:"$geners"
+},{
+    $project:{
+        _id:0,
+        year:0,
+        author:0
+    }
+}])
+
+//19
+db.log.aggregate([{$lookup:{
+     from: "books",
+      localField: "book_id",
+      foreignField: "_id",
+      as: "books_details"
+}},{$project:{
+    _id:0,
+    book_id:0
+}}])
