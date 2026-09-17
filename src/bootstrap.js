@@ -7,8 +7,8 @@ const app = express()
 app.use(express.json())
 export const bootstrap=async()=>{
     await test()
-    app.use("/collection",bookrouter)
-     app.use("/collection",authorrouter)
-     app.use("/collection",logrouter)
+    app.use("/",bookrouter)
+     app.use("/",authorrouter)
+     app.use("/",logrouter)
     app.listen(3000)
 }
