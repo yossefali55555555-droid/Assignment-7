@@ -78,7 +78,7 @@ db.books.find({
 
 //11
 db.books.find({
-    genre: "Science Fiction"
+    genres: "Science Fiction"
 })
 
 //12
