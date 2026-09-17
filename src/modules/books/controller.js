@@ -1,12 +1,12 @@
 import { Router } from "express";
 const bookrouter = Router();
 import * as all from "./service.js"
-bookrouter.get("/books",async(req,res)=>{
+bookrouter.post("/books",async(req,res)=>{
     const data = await all.CTC()
     res.json(data)
 })
 
-bookrouter.get("/books/index",async(req,res)=>{
+bookrouter.post("/books/index",async(req,res)=>{
     const data = await all.createindex()
     res.json(data)
 })

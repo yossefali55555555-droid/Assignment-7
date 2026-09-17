@@ -85,7 +85,7 @@ export const intonly =async()=>{
 
 
 export const nin =async()=>{
-    const data = await db.collection("books").find({genre:{
+    const data = await db.collection("books").find({genres:{
         $nin:["Horror","Science Fiction"]
     }}).toArray()
     return{data}
