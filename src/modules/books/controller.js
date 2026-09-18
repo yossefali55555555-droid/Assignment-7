@@ -21,8 +21,13 @@ bookrouter.post("/insertone",async(req,res)=>{
 
 bookrouter.post ("/insertmany",async(req,res)=>{
     const body = req.body 
+    if(!Array.isArray(body)||body.length<3){
+        res.status(400).json({msg:"error ,  should be more than 3 docs"})
+    }
+    else{
     const data = await all.insertmany(body)
     res.json(data)
+    }
 })
 
 bookrouter.get ("/future",async(req,res)=>{
