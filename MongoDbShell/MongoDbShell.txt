@@ -23,7 +23,7 @@ db.authors.insertOne({
 
 //3
 db.createCollection("log",{
-    capped:true ,size :10000
+    capped:true ,size :1024 * 1024
 })
 
 
